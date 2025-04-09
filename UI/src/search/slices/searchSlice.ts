@@ -28,6 +28,7 @@ const searchSlice = createSlice({
         },
         resetUsers(state) {
             state.users = [];
+            state.total_count = 0;
         },
     },
 });

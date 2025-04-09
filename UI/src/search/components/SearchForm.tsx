@@ -41,7 +41,7 @@ export default function SearchForm() {
     function searchChange(e: React.ChangeEvent<HTMLInputElement>) {
 
         const valueFormat: string = e.target.value.trim();
-        if(valueFormat && valueFormat.length < 3) {
+        if(!valueFormat || valueFormat.length < 3) {
             dispatch(resetUsers());
         }
         setQuery(valueFormat);

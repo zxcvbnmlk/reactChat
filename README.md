@@ -1,12 +1,12 @@
-# socket io
+# reactChat
 
-A little chat app with node js  and angular
+A little chat app with node.js  and angular
 
 ## use technologies
 
 - npm
 - nodejs
-- angular 14
+- react 19
 - socket.io
 - ngX Starter Kit https://github.com/ngx-rocket/starter-kit
 
@@ -20,6 +20,6 @@ npm install
 // UI start
 cd .\UI\
 npm install
-ng serve
+npm run dev
 ```
 

@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import ChatIcon from '@mui/icons-material/Chat';
@@ -8,19 +8,23 @@ import HomeIcon from '@mui/icons-material/Home';
 import React from "react";
 import './header.scss'
 
-export default function Header() {
-    const [value, setValue] = React.useState(0);
+enum Pages {
+    "" = 0,
+    chat = 1,
+    search = 2
+}
 
+export default function Header() {
+    const location = useLocation().pathname.split('/')[1];
+    const [page, setPage] = React.useState(Pages[location as keyof typeof Pages]);
     return (
         <header>
-
                     <div className="logo"><BeachAccessIcon/><Link to="/">React Chat</Link></div>
-
                     <BottomNavigation
                         showLabels
-                        value={value}
-                        onChange={(_event, newValue) => {
-                            setValue(newValue);
+                        value={page}
+                        onChange={(_event, newPage) => {
+                            setPage(newPage);
                         }}
                     >
                         <BottomNavigationAction
@@ -33,7 +37,7 @@ export default function Header() {
                             label="Chat"
                             icon={<ChatIcon/>}
                             component={Link}
-                            to="/"
+                            to="/chat"
                         />
                         <BottomNavigationAction
                             label="Search"
@@ -42,7 +46,6 @@ export default function Header() {
                             to="/search"
                         />
                     </BottomNavigation>
-
         </header>
     )
 }

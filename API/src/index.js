@@ -8,7 +8,7 @@ const index = http.Server(app);
 
 const io = require("socket.io")(index, {
     cors: {
-        origin: "http://localhost:4200",
+        origin: "http://localhost:5173",
         methods: ["GET", "POST"],
         allowedHeaders: ["my-custom-header"],
         credentials: true

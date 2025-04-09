@@ -1,5 +1,9 @@
-import {User} from "@src/_models/user.ts";
-
+export interface UserGit {
+    id: number;
+    login: string;
+    avatar_url: string;
+    html_url: string;
+}
 export interface SearchRequest {
     q: string;
     page: number;
@@ -10,16 +14,15 @@ export interface SearchUsersAction {
 }
 
 export interface SearchState {
-    users: User[];
+    users: UserGit[];
     loading: boolean;
     error: string | null;
+    total_count: number
 
 }
 
 export interface GitHubResponse {
-    data: {
-        incomplete_results: boolean,
-        items: User[],
-        total_count: number
-    },
+    incomplete_results: boolean,
+    items: UserGit[],
+    total_count: number
 }

@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import searchReducer from "@src/search/slices/searchSlice";
+import {searchReducer} from "@src/search/slices/searchSlice.ts";
 import watchSearchUsers from "@src/search/sagas/searchSaga";
 import { all } from "redux-saga/effects";
 
@@ -15,6 +15,7 @@ export const store = configureStore({
 });
 
 function* rootSaga() {
+    console.log('rootSaga()')
     yield all([watchSearchUsers()]);
 }
 

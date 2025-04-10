@@ -34,6 +34,6 @@ export const {
     addMessage,
     setAllMessages,
 } = chatSlice.actions;
-
-export default chatSlice.reducer;
+export const chatReducer = chatSlice.reducer;
+// export default chatSlice.reducer;
 

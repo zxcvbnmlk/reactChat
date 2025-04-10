@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
-import {connectSocket, disconnectSocket} from "@src/chat/sagas/chatSaga.ts";
+import {connectSocket, sendMessage,disconnectSocket} from "@src/chat/slices/chatSlice.ts";
 
 export default function Chat() {
 

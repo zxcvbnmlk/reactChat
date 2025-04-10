@@ -1,15 +1,21 @@
-import { Routes, Route } from "react-router-dom";
-import Home from "../home/home";
-import Search from "../search/search";
-import Chat from "../chat/chat";
+import Home from "@src/home/home";
+import Search from "@src/search/search";
+import Chat from "@src/chat/chat";
+import {Route, Routes } from "react-router";
+import Auth from "@src/auth/auth.tsx";
+import PrivateRoute from "@src/_routes/PrivateRoute.tsx";
+
+
 
 
 export default function AppRouter() {
     return (
         <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/search" element={<Search />} />
+
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+            <Route path="/chat" element={<PrivateRoute><Chat /></PrivateRoute>} />
+            <Route path="/search" element={<PrivateRoute><Search /></PrivateRoute>} />
         </Routes>
 
     );

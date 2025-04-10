@@ -1,43 +1,45 @@
-import { call, put, takeLatest } from "redux-saga/effects";
-import axios from "axios";
-// import { searchUsersRequest, searchUsersSuccess, searchUsersFailure } from "../slices/chatSlice.ts";
-// import {SearchUsersAction, GitHubResponse} from "@src/search/models/search.ts"
-import { io, Socket } from 'socket.io-client';
+import { call, put, take, takeLatest } from "redux-saga/effects";
+import {
+    addMessage,
+    connectSocket,
+    disconnectSocket,
+    sendMessage,
+    setUsers,
+    setAllMessages,
+} from "@src/chat/slices/chatSlice";
+import { connectSocket as socketInit, getSocket, disconnectSocket as disconnect } from "@src/chat/services/socket";
+import { eventChannel } from "redux-saga";
 
-const API_LOCAL = "http://localhost:3000/";
+function* handleConnect() {
+    const credentials = JSON.parse(localStorage.getItem("credentials") || "{}");
+    const socket = yield call(socketInit, credentials.username, credentials.token);
 
-
-let socket: Socket;
-
-export const connectSocket = (username: string, token: string): Socket => {
-    socket = io(API_LOCAL, {
-        query: { username, token },
+    const channel = eventChannel(emitter => {
+        socket.on("users", (users) => emitter({ type: "users", payload: users }));
+        socket.on("message", (message) => emitter({ type: "message", payload: message }));
+        socket.on("messageAll", (messages) => emitter({ type: "all", payload: messages }));
+        return () => socket.off();
     });
-    return socket;
-};
 
-export const getSocket = (): Socket => {
-    if (!socket) throw new Error("Socket is not initialized");
-    return socket;
-};
+    while (true) {
+        const { type, payload } = yield take(channel);
+        if (type === "users") yield put(setUsers(payload));
+        if (type === "message") yield put(addMessage(payload));
+        if (type === "all") yield put(setAllMessages(payload));
+    }
+}
 
-export const disconnectSocket = () => {
-    if (socket) socket.disconnect();
-};
+function* handleSendMessage(action: ReturnType<typeof sendMessage>) {
+    const socket = getSocket();
+    socket.emit("message", action.payload);
+}
 
+function* handleDisconnect() {
+    yield call(disconnect);
+}
 
-// function* fetchGitHubUsers(action: SearchUsersAction) {
-//     try {
-//         const response: GitHubResponse = yield call(() =>
-//             axios.get(`${API_LOCAL}?q=${action.payload.q}&page=${action.payload.page}`)
-//         );
-//         yield put(searchUsersSuccess(response.data.items));
-//     } catch (error: any) {
-//         yield put(searchUsersFailure(error.message));
-//     }
-// }
-
-
-export default function* watchSearchUsers() {
-    yield takeLatest(searchUsersRequest.type, fetchGitHubUsers);
+export function* chatSaga() {
+    yield takeLatest(connectSocket.type, handleConnect);
+    yield takeLatest(sendMessage.type, handleSendMessage);
+    yield takeLatest(disconnectSocket.type, handleDisconnect);
 }

@@ -21,7 +21,6 @@ export default function App() {
     }, [dispatch]);
 
     const isAuthenticated = username && token;
-    console.log('isAuthenticated',isAuthenticated)
     return (
         <Router>
             {isAuthenticated && <Header />}

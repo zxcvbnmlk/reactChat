@@ -4,16 +4,19 @@ import {ChatState, Message, User} from "@src/chat/models/chat";
 const initialState: ChatState = {
     users: [],
     messages: [],
-    loading: false,
+    loading: false
 };
 
 const chatSlice = createSlice({
     name: "chat",
     initialState,
     reducers: {
-        connectSocket: () => {},
-        disconnectSocket: () => {},
-        sendMessage: (_state, _action: PayloadAction<string>) => {},
+        connectSocket: () => {
+        },
+        disconnectSocket: () => {
+        },
+        sendMessage: (_state, _action: PayloadAction<string>) => {
+        },
         setUsers: (state, action: PayloadAction<User[]>) => {
             state.users = action.payload;
         },
@@ -35,5 +38,4 @@ export const {
     setAllMessages,
 } = chatSlice.actions;
 export const chatReducer = chatSlice.reducer;
-// export default chatSlice.reducer;
 

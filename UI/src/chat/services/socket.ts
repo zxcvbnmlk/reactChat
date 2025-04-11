@@ -5,7 +5,7 @@ const API_LOCAL = "http://localhost:3000/";
 
 let socket: Socket;
 
-export const connectSocket = (username: string, token: string): Socket => {
+export const socketInit = (username: string, token: string): Socket => {
     socket = io(API_LOCAL, {
         query: { username, token },
     });
@@ -18,5 +18,10 @@ export const getSocket = (): Socket => {
 };
 
 export const disconnectSocket = () => {
-    if (socket) socket.disconnect();
+
+    if (socket) {
+        console.log(`Пользователь ${socket.id} вышел из чата` );
+        socket.disconnect();
+
+    }
 };

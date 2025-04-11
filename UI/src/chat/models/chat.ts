@@ -1,12 +1,14 @@
 export interface Message {
     text: string;
-    sender: string;
-    timestamp: string;
+    username: string;
+    date: string;
+    token: string;
 }
 
 export interface User {
-    id: string;
+    userID: string;
     username: string;
+    token: string;
 }
 
 

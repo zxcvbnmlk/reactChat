@@ -21,6 +21,7 @@ enum Pages {
 
 export default function Header() {
     const [page, setPage] = React.useState(Pages[""]);
+    const {username} = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation().pathname.split('/')[1]
@@ -28,13 +29,13 @@ export default function Header() {
         setPage(Pages[location as keyof typeof Pages])
     })
 
-    const {username} = useSelector((state: RootState) => state.auth);
+
 
     function exit() {
+
         dispatch(logout());
         navigate("/auth");
     }
-    console.log('username1111111',username)
     return (
         <header>
                     <div className="left-block">

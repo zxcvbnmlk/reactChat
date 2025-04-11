@@ -8,7 +8,6 @@ A little chat app with node.js  and angular
 - nodejs
 - react 19
 - socket.io
-- ngX Starter Kit https://github.com/ngx-rocket/starter-kit
 
 ## Installation
 ```bash

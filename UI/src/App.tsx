@@ -5,7 +5,7 @@ import './App.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@src/_redux/store.ts";
 import {useEffect} from "react";
-import {authRequest, finishLoading} from "@src/auth/slices/searchSlice.ts";
+import {authSuccess} from "@src/auth/slices/authSlice.ts";
 
 
 export default function App() {
@@ -15,9 +15,8 @@ export default function App() {
         const credentials = JSON.parse(localStorage.getItem("credentials") || "{}");
 
         if (credentials.username && credentials.token) {
-            dispatch(authRequest(credentials));
+            dispatch(authSuccess(credentials));
         }
-        dispatch(finishLoading());
     }, [dispatch]);
 
     const isAuthenticated = username && token;

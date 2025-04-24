@@ -1,10 +1,43 @@
 const express = require('express')
 const app = express();
-
+const bodyParser = require('body-parser');
 const http = require('http');
-
-
 const index = http.Server(app);
+let apiRoutes = express.Router();
+
+
+apiRoutes.use((req, res, next) => { //allow cross-origin requests
+
+    res.header("Access-Control-Allow-Methods",  "*");
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Content-Type", "text/html; charset=utf-8");
+    next();
+});
+
+// Parsers
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false}));
+
+app.use('/api', apiRoutes);
+
+
+
+// Send all other requests to the Angular app
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+
+
+
+apiRoutes.post('/auth', (req, res) => {
+    const random = Math.floor(Math.random() * 111111111111111111111111111111);
+    res.send({
+        username: req.body.username,
+        token: random
+    });
+})
 
 const io = require("socket.io")(index, {
     cors: {
@@ -17,6 +50,8 @@ const io = require("socket.io")(index, {
 const port = process.env.PORT || 3000;
 const msgs = [];
 let users = [];
+
+
 io.on('connection', (socket) => {
     socket.join("room1");
     socket.on('message', (message) => {

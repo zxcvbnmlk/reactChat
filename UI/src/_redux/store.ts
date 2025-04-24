@@ -4,8 +4,9 @@ import {searchReducer} from "@src/search/slices/searchSlice";
 import watchSearchUsers from "@src/search/sagas/searchSaga";
 import { all } from "redux-saga/effects";
 import {chatReducer} from "@src/chat/slices/chatSlice.ts";
-import {authReducer} from "@src/auth/slices/searchSlice.ts";
+import {authReducer} from "@src/auth/slices/authSlice.ts";
 import {chatSaga} from "@src/chat/sagas/chatSaga.ts";
+import watchAuthUser from "@src/auth/sagas/authSaga.ts";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -22,6 +23,7 @@ export const store = configureStore({
 
 function* rootSaga() {
     yield all([
+        watchAuthUser(),
         watchSearchUsers(),
         chatSaga()
     ]);

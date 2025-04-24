@@ -7,7 +7,7 @@ import BeachAccessIcon from '@mui/icons-material/BeachAccess';
 import HomeIcon from '@mui/icons-material/Home';
 import React, {useEffect} from "react";
 import './header.scss'
-import {logout} from "@src/auth/slices/searchSlice.ts";
+import {logout} from "@src/auth/slices/authSlice.ts";
 import {Button} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";

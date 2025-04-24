@@ -1,7 +1,5 @@
 import { io, Socket } from 'socket.io-client';
-
-const API_LOCAL = "http://localhost:3000/";
-
+import {API_LOCAL} from "@src/_env/env.ts";
 
 let socket: Socket;
 
@@ -18,10 +16,7 @@ export const getSocket = (): Socket => {
 };
 
 export const disconnectSocket = () => {
-
     if (socket) {
-        console.log(`Пользователь ${socket.id} вышел из чата` );
         socket.disconnect();
-
     }
 };

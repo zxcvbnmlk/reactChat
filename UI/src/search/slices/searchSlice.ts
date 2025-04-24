@@ -15,7 +15,6 @@ const searchSlice = createSlice({
     reducers: {
         searchUsersRequest: (state, _action: PayloadAction<SearchRequest>) => {
             state.loading = true;
-            state.error = null;
         },
         searchUsersSuccess: (state, action: PayloadAction<GitHubResponse>) => {
             state.loading = false;
